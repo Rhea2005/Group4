@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Status</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Global Styles */
+:root {
+  --bright-blue: #4D7CFE;
+  --dark-gray: #555555;
+  --black: #000000;
+  --white: #FFFFFF;
+  --golden-yellow: #F4C542;
+  --light-brown: #C68642;
+  --green: #7BB661;
+  --red: #C0392B;
+  --soft-gray: #f4f4f4;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--soft-gray);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f1f1f1, #e3e3e3);
+}
+
+header {
+  background-color: var(--bright-blue);
+  color: var(--white);
+  padding: 1.5rem;
+  text-align: center;
+  width: 100%;
+  border-bottom: 4px solid var(--dark-gray);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 600px;
+  padding: 3rem;
+  background-color: var(--white);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.order-title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--black);
+  margin-bottom: 1.5rem;
+}
+
+.order-summary {
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.order-detail p {
+  margin: 0.5rem 0;
+}
+
+.order-progress {
+  margin-top: 2rem;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--green);
+  border-radius: 10px;
+  width: 0;
+  transition: width 1s ease-in-out;
+}
+
+button {
+  background-color: var(--bright-blue);
+  color: var(--white);
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: all 0.4s ease;
+  margin-top: 2rem;
+  box-shadow: 0 5px 15px rgba(77, 124, 254, 0.2);
+}
+
+button:hover {
+  background-color: var(--golden-yellow);
+  color: var(--black);
+  transform: translateY(-4px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+footer {
+  background-color: var(--bright-blue);
+  color: var(--white);
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top: 4px solid var(--dark-gray);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 2rem;
+  }
+
+  .order-title {
+    font-size: 1.6rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <h1>Your Order Status</h1>
+  </header>
+
+  <main class="main-content">
+    <section class="order-status">
+      <h2 class="order-title">Order Summary</h2>
+
+      <div class="order-summary">
+        <div class="order-detail">
+          <p><strong>Food Ordered:</strong> <span id="food-item">Loading...</span></p>
+          <p><strong>Price:</strong> <span id="price">₱0.00</span></p>
+          <p><strong>Address:</strong> <span id="address">Loading...</span></p>
+        </div>
+
+        <div class="order-progress">
+          <h3>Order Status</h3>
+          <div class="progress-bar-container">
+            <div id="progress-bar" class="progress-bar"></div>
+          </div>
+          <p id="order-status-text">Preparing your food...</p>
+        </div>
+
+        <button onclick="goBackToMenu()" class="back-button">Back to Menu</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 Tap2Get Food Ordering</p>
+  </footer>
+
+  <script>
+    // Fetch order data from localStorage
+    window.onload = function() {
+      const food = localStorage.getItem('orderFood');
+      const price = localStorage.getItem('orderPrice');
+      const address = localStorage.getItem('orderAddress');
+
+      // Display the order summary
+      document.getElementById('food-item').textContent = food || 'Not available';
+      document.getElementById('price').textContent = price || '₱0.00';
+      document.getElementById('address').textContent = address || 'Not available';
+
+      // Start the order progress animation
+      startOrderProgress();
+    };
+
+    // Simulate order progress
+    function startOrderProgress() {
+      let progress = 0;
+      const progressBar = document.getElementById('progress-bar');
+      const statusText = document.getElementById('order-status-text');
+
+      const progressInterval = setInterval(() => {
+        if (progress >= 100) {
+          clearInterval(progressInterval);
+          statusText.textContent = 'Order Delivered!';
+          progressBar.style.width = '100%';
+        } else {
+          progress += 10;
+          progressBar.style.width = progress + '%';
+          if (progress === 30) {
+            statusText.textContent = 'Preparing your food...';
+          } else if (progress === 60) {
+            statusText.textContent = 'Food is being packed...';
+          } else if (progress === 90) {
+            statusText.textContent = 'Out for delivery...';
+          }
+        }
+      }, 1000); // Updates every 1 second
+    }
+
+    // Function to navigate back to menu
+    function goBackToMenu() {
+      window.location.href = 'menu.html';
+    }
+  </script>
+
+</body>
+</html>

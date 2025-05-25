@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tap2Get - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+  <style>
+    /* Reset */
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #FFFFFF;
+      color: #555555;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      user-select: none;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated background circles */
+    .bg-circle {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.15;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      filter: blur(40px);
+      z-index: 0;
+    }
+    .circle1 {
+      width: 250px;
+      height: 250px;
+      background: #4D7CFE;
+      top: -80px;
+      left: -100px;
+      animation-name: rotateBG;
+      animation-duration: 40s;
+    }
+    .circle2 {
+      width: 180px;
+      height: 180px;
+      background: #F4C542;
+      top: 100px;
+      right: -70px;
+      animation-name: rotateBGReverse;
+      animation-duration: 50s;
+    }
+    .circle3 {
+      width: 200px;
+      height: 200px;
+      background: #C0392B;
+      bottom: -90px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation-name: rotateBG;
+      animation-duration: 45s;
+    }
+    @keyframes rotateBG {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes rotateBGReverse {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+
+    .login-container {
+      background: #FFFFFF;
+      padding: 45px 55px;
+      border-radius: 30px;
+      box-shadow: 0 18px 50px rgba(77,124,254,0.25);
+      width: 100%;
+      max-width: 420px;
+      z-index: 10;
+      animation: fadeInUp 1s ease forwards;
+      position: relative;
+    }
+    .login-container h2 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: #000000;
+      user-select: text;
+      text-align: center;
+      letter-spacing: 1.3px;
+      animation: textPulse 3s ease-in-out infinite;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-weight: 600;
+      color: #555555;
+      margin-bottom: 8px;
+      font-size: 1rem;
+      user-select: text;
+    }
+    input[type="email"],
+    input[type="password"] {
+      padding: 14px 18px;
+      margin-bottom: 8px;
+      border: 2px solid #C68642; /* Light Brown */
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      outline-offset: 3px;
+    }
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      border-color: #4D7CFE;
+      box-shadow: 0 0 12px #4D7CFE;
+      outline: 3px solid #4D7CFE;
+    }
+    .error-message {
+      color: #C0392B;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      min-height: 1.2em;
+      user-select: text;
+    }
+    button {
+      background: #4D7CFE;
+      color: #FFFFFF;
+      font-weight: 700;
+      padding: 15px 0;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(77,124,254,0.7);
+      transition: background 0.3s ease, transform 0.2s ease;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+    button::before {
+      content: '';
+      position: absolute;
+      width: 140%;
+      height: 100%;
+      top: 0; left: -100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: skewX(-25deg);
+      transition: left 0.5s ease;
+      pointer-events: none;
+    }
+    button:hover::before {
+      left: 100%;
+    }
+    button:hover {
+      background: #3760d8;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(55,96,216,0.85);
+    }
+    button:focus-visible {
+      outline: 3px solid #F4C542;
+      outline-offset: 3px;
+    }
+
+    .signup-link {
+      margin-top: 25px;
+      font-size: 0.95rem;
+      color: #555555;
+      text-align: center;
+      user-select: text;
+    }
+    .signup-link a {
+      color: #4D7CFE;
+      font-weight: 600;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    .signup-link a:hover,
+    .signup-link a:focus-visible {
+      color: #F4C542;
+      outline: none;
+      text-decoration: underline;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes textPulse {
+      0%, 100% { color: #4D7CFE; }
+      50% { color: #F4C542; }
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 40px 25px;
+      }
+      .login-container h2 {
+        font-size: 2rem;
+      }
+      input[type="email"], input[type="password"] {
+        padding: 12px 14px;
+        font-size: 0.95rem;
+      }
+      button {
+        font-size: 1.1rem;
+        padding: 14px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-circle circle1" aria-hidden="true"></div>
+  <div class="bg-circle circle2" aria-hidden="true"></div>
+  <div class="bg-circle circle3" aria-hidden="true"></div>
+
+  <main>
+    <section class="login-container" aria-label="User login form">
+      <h2>Welcome Back!</h2>
+
+      <!-- Live region for form errors -->
+      <div id="form-error" class="error-message" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+      <form id="loginForm" action="#" method="POST" autocomplete="on" novalidate>
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+          aria-required="true"
+          autocomplete="email"
+          aria-describedby="emailHelp"
+        />
+        <div id="emailHelp" class="sr-only">Enter a valid email address.</div>
+
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+          aria-required="true"
+          autocomplete="current-password"
+          minlength="6"
+          aria-describedby="passwordHelp"
+        />
+        <div id="passwordHelp" class="sr-only">Password must be at least 6 characters.</div>
+
+        <button type="submit" aria-label="Log in to your account">Log In</button>
+      </form>
+      <p class="signup-link">
+        Don't have an account?
+        <a href="signup.html">Sign Up</a>
+      </p>
+    </section>
+  </main>
+
+  <script>
+    // Accessibility helper: focus outline visible only on keyboard navigation
+    (function() {
+      function handleFirstTab(e) {
+        if(e.key === 'Tab') {
+          document.body.classList.add('user-is-tabbing');
+          window.removeEventListener('keydown', handleFirstTab);
+        }
+      }
+      window.addEventListener('keydown', handleFirstTab);
+    })();
+
+    // Simple form validation with accessible error feedback
+    const form = document.getElementById('loginForm');
+    const formError = document.getElementById('form-error');
+
+    form.addEventListener('submit', function(event) {
+      formError.textContent = '';
+      let errors = [];
+
+      const email = form.email.value.trim();
+      const password = form.password.value.trim();
+
+      if (!email) {
+        errors.push('Email is required.');
+      } else if (!validateEmail(email)) {
+        errors.push('Please enter a valid email address.');
+      }
+      if (!password) {
+        errors.push('Password is required.');
+      } else if (password.length < 6) {
+        errors.push('Password must be at least 6 characters.');
+      }
+
+      if (errors.length) {
+        event.preventDefault();
+        formError.textContent = errors.join(' ');
+        formError.focus();
+      }
+    });
+
+    function validateEmail(email) {
+      // Basic email regex
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email.toLowerCase());
+    }
+  </script>
+
+  <style>
+    /* Hide helper text from visual users, but accessible to screen readers */
+    .sr-only {
+      position: absolute !important;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      border: 0;
+    }
+
+    /* Show outline only when keyboard navigating */
+    body:not(.user-is-tabbing) button:focus,
+    body:not(.user-is-tabbing) input:focus,
+    body:not(.user-is-tabbing) a:focus {
+      outline: none;
+    }
+  </style>
+</body>
+</html>

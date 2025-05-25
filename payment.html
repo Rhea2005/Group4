@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Global Styles */
+:root {
+  --bright-blue: #4D7CFE;
+  --dark-gray: #555555;
+  --black: #000000;
+  --white: #FFFFFF;
+  --golden-yellow: #F4C542;
+  --light-brown: #C68642;
+  --green: #7BB661;
+  --red: #C0392B;
+  --soft-gray: #f4f4f4;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--soft-gray);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f1f1f1, #e3e3e3);
+}
+
+header {
+  background-color: var(--bright-blue);
+  color: var(--white);
+  padding: 1.5rem;
+  text-align: center;
+  width: 100%;
+  border-bottom: 4px solid var(--dark-gray);
+}
+
+header h1 {
+  font-size: 2.5rem;
+  text-transform: uppercase;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 600px;
+  padding: 3rem;
+  background-color: var(--white);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  animation: fadeInUp 1s ease-out forwards;
+}
+
+.form-title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--black);
+  margin-bottom: 1.5rem;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--dark-gray);
+}
+
+input {
+  padding: 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--dark-gray);
+  border-radius: 10px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  background-color: #f7f7f7;
+}
+
+input:focus {
+  border-color: var(--bright-blue);
+  background-color: var(--white);
+  box-shadow: 0 0 8px 2px rgba(77, 124, 254, 0.3);
+}
+
+button {
+  background-color: var(--bright-blue);
+  color: var(--white);
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: all 0.4s ease;
+  margin-top: 1.5rem;
+  box-shadow: 0 5px 15px rgba(77, 124, 254, 0.2);
+}
+
+button:hover {
+  background-color: var(--golden-yellow);
+  color: var(--black);
+  transform: translateY(-4px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+
+/* Animations */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+input:focus {
+  outline: none;
+  transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+  .main-content {
+    padding: 2rem;
+  }
+
+  .form-title {
+    font-size: 1.6rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <h1>Payment Details</h1>
+  </header>
+
+  <main class="main-content">
+    <section class="payment-form">
+      <h2 class="form-title">Complete Your Payment</h2>
+
+      <form id="payment-form" aria-labelledby="form-title" class="form-container">
+        <div class="form-group">
+          <label for="food">Food Item:</label>
+          <input type="text" id="food" value="Chicken Adobo" disabled aria-disabled="true">
+        </div>
+
+        <div class="form-group">
+          <label for="price">Price:</label>
+          <input type="text" id="price" value="₱350.00" disabled aria-disabled="true">
+        </div>
+
+        <div class="form-group">
+          <label for="address">Delivery Address:</label>
+          <input type="text" id="address" placeholder="Enter your delivery address" aria-required="true">
+        </div>
+
+        <div class="form-group">
+          <label for="contact">Contact Number:</label>
+          <input type="tel" id="contact" placeholder="Enter your contact number" aria-required="true" pattern="[0-9]{10}">
+        </div>
+
+        <div class="form-group">
+          <label for="card-number">Card Number:</label>
+          <input type="text" id="card-number" placeholder="Enter your card number" required aria-required="true" pattern="\d{16}">
+        </div>
+
+        <div class="form-group">
+          <label for="expiration-date">Expiration Date:</label>
+          <input type="month" id="expiration-date" required aria-required="true">
+        </div>
+
+        <div class="form-group">
+          <label for="cvv">CVV:</label>
+          <input type="text" id="cvv" placeholder="Enter your CVV" required aria-required="true" pattern="\d{3}">
+        </div>
+
+        <button type="button" id="submit-payment" onclick="saveOrderAndRedirect()" aria-label="Proceed to payment summary">Proceed to Order Status</button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    // Function to save order data to localStorage and redirect to order status page
+    function saveOrderAndRedirect() {
+      const food = document.getElementById('food').value;
+      const price = document.getElementById('price').value;
+      const address = document.getElementById('address').value;
+      const contact = document.getElementById('contact').value;
+
+      // Store data in localStorage
+      localStorage.setItem('orderFood', food);
+      localStorage.setItem('orderPrice', price);
+      localStorage.setItem('orderAddress', address);
+      localStorage.setItem('orderContact', contact);
+
+      // Redirect to the order status page
+      window.location.href = 'order-status.html';
+    }
+  </script>
+
+</body>
+</html>
