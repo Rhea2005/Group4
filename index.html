@@ -20,6 +20,19 @@
       overflow-x: hidden;
       user-select: none;
     }
+    nav a {
+  color: #555555;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 30px;
+  position: relative;
+  transition: color 0.3s ease;
+  font-size: 1rem;
+}
+
+nav a:first-child {
+  margin-left: 0;
+}
     header {
       padding: 20px 40px;
       display: flex;
@@ -297,16 +310,38 @@
         display: none;
       }
     }
+     /* Motorcycle Animation */
+    .motorcycle {
+      position: absolute;
+      bottom: 120px;
+      left: -200px;
+      width: 150px;
+      animation: drive 10s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes drive {
+      0% {
+        left: -200px;
+      }
+      100% {
+        left: 100%;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>TAP 2 GET</h1>
-    <nav>
-      <a href="login.html">Login</a>
-      <a href="signup.html">Sign Up</a>
-    </nav>
-  </header>
+  <h1>TAP 2 GET</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="login.html">Login</a>
+    <a href="signup.html">Sign Up</a>
+    <a href="menu.html">Menu</a>
+    <a href="payment.html">Payment</a>
+    <a href="order-status.html">Order Status</a>
+  </nav>
+</header>
 
   <main>
     <section class="hero" role="main" aria-label="Main promotional section">
@@ -324,7 +359,7 @@
       <a href="menu.html" class="btn" role="button" aria-label="Browse Menu">Browse Menu</a>
     </section>
   </main>
-
+  <img src="C:\Group4\assets\rider.jpg" alt="Motorcycle Rider" class="motorcycle">
   <footer>
     &copy; 2025 TAP 2 GET
   </footer>
